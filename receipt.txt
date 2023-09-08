@@ -1,0 +1,10 @@
+========================
+ BinarFud========================
+ Terima Kasih sudah Memesandi BinarFud Dibawah ini adalah pesanan andaNasi + Ayam	3	Rp. 54000
+Es Teh Manis	2	Rp. 6000
+------------------------+
+Total		5	Rp 60000
+
+Pembayaran : BinarCash
+========================
+Simpan struk ini sebagaibukti Pembayaran========================
