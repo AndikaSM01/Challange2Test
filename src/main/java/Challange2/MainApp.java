@@ -16,7 +16,7 @@ import java.io.FileWriter;
             pesanan = new Order();
         }
 
-        public void tampilanMainScreen() {
+        public void tampilanMain() {
             try{
             boolean exit = false;
 
@@ -25,23 +25,8 @@ import java.io.FileWriter;
                     daftarMenu.tampilanPilihanMenu();
                     System.out.print("=> ");
                     int pilihan = scanner.nextInt();
+            exit = TampilanMainScreen(pilihan, exit);
 
-                    switch (pilihan) {
-                        case 99:
-                            konfirmasiDanPembayaran();
-                            break;
-                        case 0:
-                            System.out.println("Terima kasih telah berkunjung ");
-                            exit = true;
-                            break;
-                        default:
-                            if (pilihan >= 1 && pilihan <= daftarMenu.JumlahMenu) {
-                                tampilanPesanan(pilihan);
-                            } else {
-                                tampilkanKesalahan("Nomor yang dimasukan tidak sesuai");
-                            }
-                            break;
-                    }
                 }
             }catch(InputMismatchException ime){
 
@@ -50,7 +35,25 @@ import java.io.FileWriter;
             }
             scanner.close();
         }
-
+        public boolean TampilanMainScreen(int pilihan, boolean exit){
+            switch (pilihan) {
+                case 99:
+                    konfirmasiDanPembayaran();
+                    break;
+                case 0:
+                    System.out.println("Terima kasih telah berkunjung ");
+                    exit = true;
+                    break;
+                default:
+                    if (pilihan >= 1 && pilihan <= daftarMenu.JumlahMenu) {
+                        tampilanPesanan(pilihan);
+                    } else {
+                        tampilkanKesalahan("Nomor yang dimasukan tidak sesuai");
+                    }
+                    break;
+            }
+            return exit;
+        }
         public void tampilanPesanan(int nomorMenu) {
             System.out.println("========================");
             System.out.println("Berapa pesanan anda");
@@ -111,9 +114,8 @@ import java.io.FileWriter;
                         exit = true;
                         break;
                     case 2:
-                        exit = true;
-                        break;
-                    case 0:
+
+
                         System.out.println("Terima kasih Telah Berkunjung!");
                         System.exit(0);
                         break;
@@ -200,7 +202,7 @@ import java.io.FileWriter;
 
         public static void main(String[] args) {
             MainApp app = new MainApp();
-            app.tampilanMainScreen();
+            app.tampilanMain();
         }
 
 }

@@ -1,9 +1,9 @@
 ========================
  BinarFud========================
- Terima Kasih sudah Memesandi BinarFud Dibawah ini adalah pesanan andaNasi + Ayam	3	Rp. 54000
-Es Teh Manis	2	Rp. 6000
+ Terima Kasih sudah Memesandi BinarFud Dibawah ini adalah pesanan andaNasi Goreng	2	Rp. 30000
+Mie Goreng	2	Rp. 26000
 ------------------------+
-Total		5	Rp 60000
+Total		4	Rp 56000
 
 Pembayaran : BinarCash
 ========================
