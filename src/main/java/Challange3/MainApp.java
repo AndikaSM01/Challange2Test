@@ -1,9 +1,19 @@
 package Challange2;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.FileWriter;
+
+
+@Builder
+@Data
+@AllArgsConstructor
 
     public class MainApp {
         private Scanner scanner;
@@ -22,9 +32,10 @@ import java.io.FileWriter;
 
             while (!exit) {
 
-                    daftarMenu.tampilanPilihanMenu();
-                    System.out.print("=> ");
-                    int pilihan = scanner.nextInt();
+            daftarMenu.tampilanPilihanMenu();
+            System.out.print("=> ");
+            int pilihan = scanner.nextInt();
+                System.out.println(" ");
             exit = TampilanMainScreen(pilihan, exit);
 
                 }
@@ -47,6 +58,7 @@ import java.io.FileWriter;
                 default:
                     if (pilihan >= 1 && pilihan <= daftarMenu.JumlahMenu) {
                         tampilanPesanan(pilihan);
+
                     } else {
                         tampilkanKesalahan("Nomor yang dimasukan tidak sesuai");
                     }
@@ -54,6 +66,7 @@ import java.io.FileWriter;
             }
             return exit;
         }
+
         public void tampilanPesanan(int nomorMenu) {
             System.out.println("========================");
             System.out.println("Berapa pesanan anda");
@@ -70,11 +83,14 @@ import java.io.FileWriter;
             if (jumlah > 0) {
                 menu.setTotalPesanan(jumlah);
                 pesanan.tambahPesanan(jumlah, menu.getPrice());
-            } else {
+            } else if (jumlah ==0){
+            tampilanMain();
+            }else{
                 tampilkanKesalahan("Pesanan Tidak sesuai!");
             }
             System.out.println(" ");
         }
+
 
         public void konfirmasiDanPembayaran() {
             int jumlahPesananTotal = 0;
@@ -83,17 +99,17 @@ import java.io.FileWriter;
             System.out.println("Konfirmasi dan Pembayaran");
             System.out.println("========================");
 
-            for (int i = 0; i < daftarMenu.JumlahMenu; i++) {
-                ProductName menu = daftarMenu.getMenu(i);
-                int jumlahPesanan = menu.getTotalPesanan();
+            int jumlahTotal = daftarMenu.getDaftarMenu().stream()
+                    .filter(menu -> menu.getTotalPesanan() > 0) // menyaring item dengan jumalah nol
+                    .mapToInt(menu -> {
+                        int jumlahPesanan = menu.getTotalPesanan();
+                        int result = menu.getPrice() * jumlahPesanan;
+                        System.out.println(menu.getName() + "\t" + jumlahPesanan + "\tRp. " + result);
+                        return jumlahPesanan;
+                    })
+                    .sum();
+            jumlahPesananTotal += jumlahTotal;
 
-                if (jumlahPesanan > 0) {
-                    int subtotal = menu.getPrice() * jumlahPesanan;
-
-                    System.out.println(menu.getName() + "\t" + jumlahPesanan + "\tRp. " + subtotal);
-                }
-                jumlahPesananTotal += jumlahPesanan;
-            }
             boolean exit = false;
 
             while (!exit) {
@@ -114,8 +130,8 @@ import java.io.FileWriter;
                         exit = true;
                         break;
                     case 2:
-
-
+                       tampilanMain();
+                    case 0:
                         System.out.println("Terima kasih Telah Berkunjung!");
                         System.exit(0);
                         break;
@@ -139,6 +155,19 @@ import java.io.FileWriter;
                 fileWriter.write("di BinarFud");
                 fileWriter.write(" ");
                 fileWriter.write("Dibawah ini adalah pesanan anda");
+
+//                daftarMenu.getDaftarMenu().stream()
+//                        .filter(menu -> menu.getTotalPesanan() > 0)
+//                        .forEach(menu -> {
+//                            int subtotal = menu.getPrice() * menu.getTotalPesanan();
+//                            try {
+//                                fileWriter.write(menu.getName() + "\t" + menu.getTotalPesanan() + "\tRp. " + subtotal + "\n");
+//
+//                            } catch (IOException e) {
+//                                e.printStackTrace(); // Handle the exception as needed
+//                            }
+//                            jumlahPesananTotal += menu.getTotalPesanan();
+//                        });
 
 
                 for (int i = 0; i < daftarMenu.JumlahMenu; i++) {
@@ -177,6 +206,7 @@ import java.io.FileWriter;
             System.out.println("di BinarFud");
             System.out.println(" ");
             System.out.println("Dibawah ini adalah pesanan anda");
+
 
             for (int i = 0; i < daftarMenu.JumlahMenu; i++) {
                 ProductName menu = daftarMenu.getMenu(i);

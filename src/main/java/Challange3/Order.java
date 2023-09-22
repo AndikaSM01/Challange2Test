@@ -2,6 +2,8 @@ package Challange2;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class Order {
@@ -22,5 +24,6 @@ public class Order {
             jumlahPesanan += jumlah;
             totalHarga += (jumlah * harga);
         }
+
 
 }
